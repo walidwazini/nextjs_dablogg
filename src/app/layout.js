@@ -2,6 +2,8 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 
 import { Navbar, Footer } from '../components'
+// import { ThemeContextProvider } from '@/contexts/ThemeContext'
+import { NewThemeProvider } from './theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,21 +13,27 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <div className='min-h-screen' >
-          <div
-            className={` mx-auto px-20
-          lg:max-w-3xl lg:px-10  md:max-w-[720px]
-          xl:max-w-[1024px] 2xl:max-w-[1366px] 
-          `}
-          >
-            <Navbar />
-            {children}
-            <Footer />
+    <html suppressHydrationWarning={true} lang="en">
+      <body  className={inter.className}>
+        <NewThemeProvider attribute='class' defaultTheme='system' enableSystem >
+          <div className={''} >
+            <div className='min-h-screen dark:bg-[#2d405c] bg-white ' >
+              <div
+                className={` mx-auto px-20
+              lg:max-w-3xl lg:px-10  md:max-w-[720px]
+              xl:max-w-[1024px] 2xl:max-w-[1366px] 
+              `}
+              >
+                <Navbar />
+                {children}
+                <Footer />
+              </div>
+            </div>
           </div>
-        </div>
+        </NewThemeProvider>
       </body>
     </html>
   )
