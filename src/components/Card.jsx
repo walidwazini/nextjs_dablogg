@@ -19,7 +19,7 @@ const Card = ({ title, createdAt, catSlug, slug }) => {
         <Link href={`/`} className='hover:underline text-xl ' >
           <h1>{title}</h1>
         </Link>
-        <div className='text-sm md:text-lg font-extralight dark:text-slate-200 ' >
+        <div className='text-sm md:text-md font-extralight dark:text-slate-200 ' >
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Id hic eveniet inventore perferendis? Omnis non minus, optio,
           sunt corporis sequi vero rerum saepe, natus odio et laudantium porro eius quas.

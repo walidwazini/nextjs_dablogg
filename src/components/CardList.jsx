@@ -27,7 +27,7 @@ const dummyPosts = [
 
 const CardList = () => {
   return (
-    <div className='flex-5' >
+    <div className='basis-2/3' >
       <h1 className='mx-12 my-4 text-center md:text-start font-bold text-2xl' >Recent Posts</h1>
       <div>  {/* style.posts  */}
         {dummyPosts.map((item, i) => (
