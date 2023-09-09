@@ -7,7 +7,7 @@ const MenuPost = ({ withImage, category, author, bgColor }) => {
     <Link href={'/'} className='flex items-center gap-5 ' >
       {withImage && (
         <div className='flex relative aspect-square ' >
-          <Image src='https://picsum.photos/id/163/600/400' alt='image' className='object-cover rounded-lg border-solid border-gray-300 ' />
+          <Image src='https://picsum.photos/id/163/600/400' width={180} height={120} alt='image' className='object-cover rounded-lg border-solid border-gray-300 ' />
         </div>
       )}
       <div className='flex-4 flex flex-col gap-1 ' >

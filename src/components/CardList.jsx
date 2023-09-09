@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from './Card'
+import Pagination from './Pagination'
 
 const dummyPosts = [
   {
@@ -39,6 +40,7 @@ const CardList = () => {
           />
         ))}
       </div>
+      <Pagination />
     </div>
   )
 }
