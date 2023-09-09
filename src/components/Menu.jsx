@@ -18,10 +18,10 @@ const menuLinks = [
   { title: 'coding', color: '#5e4fff31' },
 ]
 
-const Menu = () => {
+const Menu = ({ menuRef }) => {
   return (
     <div className='basis-1/3 mt-14  ' >
-      <h2 className='text-xs mb-1' >What's Hot</h2>
+      <h2 ref={menuRef} className='text-xs mb-1' >What's Hot</h2>
       <h1 className='text-xl font-semibold text-black dark:text-slate-400 ' >
         Most Popular
       </h1>

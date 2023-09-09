@@ -18,7 +18,7 @@ const CategoryList = () => {
       <div className="flex flex-wrap justify-between gap-5 " >
         {dummyData.map((item, i) => (
           <Link
-            href={'/blog?cat=style'} key={item.name}
+            href={'/blog?cat=style'} key={i}
             className={`flex items-center gap-2 w-full md:w-[45%] lg:w-1/4 xl:w-1/6 h-20 justify-center rounded-lg`}
             style={{ backgroundColor: item.bgColor }}
           >
