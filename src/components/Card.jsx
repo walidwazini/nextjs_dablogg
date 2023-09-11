@@ -9,7 +9,7 @@ const Card = ({ title, createdAt, catSlug, slug }) => {
       <div className='hidden lg:flex flex-1 h-[350px] relative justify-center items-center ' >
         <Image width={400} height={300} className='object-cover' src={'https://picsum.photos/id/300/600/400'} alt='image' />
       </div>
-      <div className='flex-1 flex flex-col gap-2 md:gap-7 ' >
+      <div className='flex-1 flex flex-col gap-2 ' >
         <div> {/* style.detail  */}
           <span>
             {createdAt.substring(0, 10)} -{" "}

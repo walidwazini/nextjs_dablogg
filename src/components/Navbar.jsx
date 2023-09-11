@@ -50,9 +50,9 @@ const Navbar = () => {
         <BiLogoYoutube />
       </div>
       <div className='text-left md:text-center text-xl xl:text-2xl' >
-        <div className='capitalize font-bold' >
+        <Link href={'/'} className='capitalize font-bold' >
           dablogg
-        </div>
+        </Link>
       </div>
       <div className='hidden lg:flex items-center justify-between gap-3' >
         <NewThemeSwitcher />
