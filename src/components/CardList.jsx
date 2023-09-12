@@ -46,6 +46,7 @@ const CardList = ({ cardRef, clickHandler }) => {
         {dummyPosts.map((item, i) => (
           <Card
             key={i}
+            slug={i}
             catSlug={item.catSlug}
             title={item.title}
             createdAt={item.createdAt}

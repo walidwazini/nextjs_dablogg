@@ -16,7 +16,7 @@ const Card = ({ title, createdAt, catSlug, slug }) => {
           </span>
           <span className='uppercase text-orange-600 font-medium ' >{catSlug}</span>
         </div>
-        <Link href={`/`} className='hover:underline text-xl ' >
+        <Link href={`/posts/${slug}`} className='hover:underline text-xl ' >
           <h1>{title}</h1>
         </Link>
         <div className='text-sm md:text-md font-extralight dark:text-slate-200 ' >

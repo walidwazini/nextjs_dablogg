@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Menu from '@/components/Menu'
+import Comments from '@/components/Comments'
 
 const SinglePage = () => {
   return (
@@ -39,7 +40,7 @@ const SinglePage = () => {
               dolore sed officia eveniet in? Assumenda error eaque voluptates quia aliquid odio qui minima! Sunt sed officia nihil.
             </p>
             <div>
-              Comment
+              <Comments />
             </div>
           </div>
         </div>
