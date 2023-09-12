@@ -30,7 +30,7 @@ const dummyPosts = [
   },
 ]
 
-const CardList = ({ cardRef, clickHandler }) => {
+const CardList = ({  clickHandler }) => {
   return (
     <div  className='basis-2/3 bg-blue-900 px-4 ' >
       <h1 className='mx-12 my-4 text-center md:text-start font-bold text-2xl' >Recent Posts</h1>
