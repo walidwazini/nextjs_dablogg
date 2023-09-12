@@ -25,7 +25,7 @@ const CommentBlock = ({ username, imgUrl, createdAt }) => {
 }
 
 const Comments = () => {
-  const online = true
+  const online = false
 
   return (
     <div className="container mt-12 ">
@@ -42,7 +42,7 @@ const Comments = () => {
       {!online && (
         <div className='mt-12 flex flex-col justify-center items-center gap-6 ' >
           <div>Login to write comment...</div>
-          <Link className='py-2 px-3 bg-[#3378c7] rounded-md text-base ' href={'/'} >Login</Link>
+          <Link className='py-2 px-3 bg-[#3378c7] rounded-md text-base ' href={'/login'} >Login</Link>
         </div>
       )}
       {online && (
