@@ -38,6 +38,7 @@ const links = [
 ]
 
 const Navbar = () => {
+  
   const [openMenu, setOpenMenu] = useState(false)
 
   const openMenuHandler = () => setOpenMenu(prevState => !prevState)
@@ -63,9 +64,11 @@ const Navbar = () => {
             </Link>
           </div>
         ))}
-        <button className='text-md px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-500' >
+        <Link href={'/login'}  
+        className='text-md px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-500' 
+        >
           Login
-        </button>
+        </Link>
       </div>
       <div className='flex lg:hidden' >
         <button

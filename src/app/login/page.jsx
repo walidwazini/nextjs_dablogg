@@ -1,4 +1,7 @@
+"use client"
+
 import React from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
 const GoogleSvg = () => (
   <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,6 +25,10 @@ const TwitterSvg = () => (
 )
 
 const LoginPage = () => {
+  const { data, status } = useSession()
+
+  console.log(data, status)
+
   return (
     <div className='container mb-16 ' >
       <div>Login Page</div>
@@ -34,7 +41,10 @@ const LoginPage = () => {
               {" "} Sign up here
             </a>
           </p>
-          <button aria-label="Continue with google" role="button" className="bg-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10">
+          <button
+            aria-label="Continue with google" role="button" className="bg-white focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
+            onClick={() => signIn('google')}
+          >
             <GoogleSvg />
             <p className="text-base font-medium ml-4 text-gray-700">Continue with Google</p>
           </button>
@@ -74,6 +84,9 @@ const LoginPage = () => {
           <div className="mt-8">
             <button role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
               Login
+            </button>
+            <button onClick={() => signOut()} role="button" className=" text-sm font-semibold bg-red-600 py-4 w-full">
+              Logout
             </button>
           </div>
         </div>
