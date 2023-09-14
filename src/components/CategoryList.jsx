@@ -27,7 +27,7 @@ const CategoryList = async () => {
 
   const data =  await getData()
 
-  console.log(data)
+  // console.log(data)
 
   return (
     <div className="" >

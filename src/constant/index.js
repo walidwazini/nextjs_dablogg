@@ -12,3 +12,27 @@ export const DemoPosts = [
   { author: 'Carlos', category: 'coding', color: '#775aec' },
   { author: 'Yassine', category: 'food', color: '#7fb881' },
 ]
+
+export const DemoPosts2 = [
+  {
+    createdAt: Date('2022-04-05'),
+    title: 'Amrabat joined ManU',
+    img: '',
+    catSlug: 'sport',
+    slug: Math.random()
+  },
+  {
+    createdAt: Date('2022-06-05'),
+    title: 'Travel to Jordan',
+    img: '',
+    catSlug: 'travel',
+    slug: Math.random()
+  },
+  {
+    createdAt: Date('2022-07-05'),
+    title: 'Lemon-spice chicken recipe',
+    img: '',
+    catSlug: 'food',
+    slug: Math.random()
+  },
+]
