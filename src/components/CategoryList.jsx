@@ -11,16 +11,33 @@ const dummyData = [
   { title: 'coding', bgColor: '#5e4fff31', },
 ]
 
-const CategoryList = () => {
+const getData = async () => {
+  const res = await fetch('http://localhost:3000/api/categories', {
+    cache: 'no-store'
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed')
+  }
+
+  return res.json()
+}
+
+const CategoryList = async () => {
+
+  const data =  await getData()
+
+  console.log(data)
+
   return (
     <div className="" >
       <h1 className=" mx-12 my-3 font-bold text-2xl md:text-center text-start " >Popular Categories</h1>
       <div className="flex flex-wrap justify-between gap-5 " >
-        {dummyData.map((item, i) => (
+        {data.map((item, i) => (
           <Link
             href={'/blog?cat=style'} key={i}
             className={`flex items-center gap-2 w-full md:w-[45%] lg:w-1/4 xl:w-1/6 h-20 justify-center rounded-lg`}
-            style={{ backgroundColor: item.bgColor }}
+            style={{ backgroundColor: item.colorScheme }}
           >
             <Image
               alt="image"
