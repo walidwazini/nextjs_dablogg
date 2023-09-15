@@ -1,24 +1,24 @@
 "use client"
 
 import React from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 const Pagination = ({ page, hasPrev, hasNext }) => {
-  // const router = useRouter()
+  const router = useRouter()
 
   return (
     <div className='flex justify-between ' >
       <button
-        onClick={() => { }}
-        disabled={hasPrev}
-        className={`w-24 p-4 text-white ${!hasPrev ? 'bg-red-950 cursor-not-allowed ' : 'bg-red-500 cursor-pointer '}  `}
+        onClick={() => router.push(`?page=${page - 1}`)}
+        disabled={!hasPrev}
+        className={`w-24 p-4 text-white ${!hasPrev ? 'bg-red-950 text-red-700 cursor-not-allowed ' : 'bg-red-500 cursor-pointer '}  `}
       >
         Previous
       </button>
       <button
-        onClick={() => { }}
+        onClick={() => router.push(`?page=${page + 1}`)}
         disabled={!hasNext}
-        className={`w-24 p-4 text-white bg-red-600 cursor-pointer } `}
+        className={`w-24 p-4 text-white ${!hasNext ? 'bg-red-950 text-red-700 cursor-not-allowed ' : 'bg-red-500 cursor-pointer '}  `}
       >
         Next
       </button>
