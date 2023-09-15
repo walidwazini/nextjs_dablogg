@@ -4,10 +4,10 @@ import Link from 'next/link'
 import MenuPost from './MenuPost'
 import { CategoryList, DemoPosts } from '@/constant'
 
-const Menu = ({ menuRef }) => {
+const Menu = () => {
   return (
     <div className='basis-1/3 mt-14  ' >
-      <h2 ref={menuRef} className='text-xs mb-1' >What's Hot</h2>
+      <h2 className='text-xs mb-1' >What's Hot</h2>
       <h1 className='text-xl font-semibold text-black dark:text-slate-400 ' >
         Most Popular
       </h1>
