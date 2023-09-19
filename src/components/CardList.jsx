@@ -3,8 +3,8 @@ import React from 'react'
 import Card from './Card'
 import Pagination from './Pagination'
 
-const getData = async (page) => {
-  const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, {
+const getData = async (page, category) => {
+  const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${category || ''}`, {
     cache: 'no-store'
   })
   if (!res.ok) {
@@ -14,8 +14,8 @@ const getData = async (page) => {
   return res.json();
 }
 
-const CardList = async ({ currentPage }) => {
-  const { posts, count } = await getData(currentPage)
+const CardList = async ({ currentPage, category }) => {
+  const { posts, count } = await getData(currentPage, category)
   const POST_PER_PAGE = 2
 
   const hasPrev = POST_PER_PAGE * (currentPage - 1) > 0

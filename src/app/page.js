@@ -4,8 +4,8 @@ import CardList from '@/components/CardList'
 import Menu from '@/components/Menu'
 
 
-const Home = ({searchParams}) => {
-  const page =parseInt(searchParams.page) || 1
+const Home = ({ searchParams }) => {
+  const page = parseInt(searchParams.page) || 1
 
   return (
     <div className=' bg-slate-100 dark:bg-blue-500 dark:bg-opacity-30 min-h-screen' >

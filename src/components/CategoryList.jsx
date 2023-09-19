@@ -2,15 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const dummyData = [
-  { title: 'style', bgColor: '#57c4ff31', },
-  { title: 'fashion', bgColor: '#da85c731', },
-  { title: 'food', bgColor: '#7fb88133' },
-  { title: 'travel', bgColor: '#ff795736' },
-  { title: 'culture', bgColor: '#ffb04f45', },
-  { title: 'coding', bgColor: '#5e4fff31', },
-]
-
 const getData = async () => {
   const res = await fetch('http://localhost:3000/api/categories', {
     cache: 'no-store'
@@ -24,10 +15,7 @@ const getData = async () => {
 }
 
 const CategoryList = async () => {
-
   const data =  await getData()
-
-  // console.log(data)
 
   return (
     <div className="" >
@@ -35,7 +23,7 @@ const CategoryList = async () => {
       <div className="flex flex-wrap justify-between gap-5 " >
         {data.map((item, i) => (
           <Link
-            href={'/blog?cat=style'} key={i}
+            href={`/blog?cat=${item?.slug}`} key={i}
             className={`flex items-center gap-2 w-full md:w-[45%] lg:w-1/4 xl:w-1/6 h-20 justify-center rounded-lg`}
             style={{ backgroundColor: item.colorScheme }}
           >
