@@ -24,7 +24,7 @@ const CategoryList = async () => {
         {data.map((item, i) => (
           <Link
             href={`/blog?cat=${item?.slug}`} key={i}
-            className={`flex items-center gap-2 w-full md:w-[45%] lg:w-1/4 xl:w-1/6 h-20 justify-center rounded-lg`}
+            className={`flex hover:underline hover:font-medium items-center gap-2 w-full md:w-[45%] lg:w-1/4 xl:w-1/6 h-20 justify-center rounded-lg`}
             style={{ backgroundColor: item.colorScheme }}
           >
             <Image
@@ -32,7 +32,7 @@ const CategoryList = async () => {
               src={'https://picsum.photos/id/184/600/400'}
               className="rounded-2xl" width={32} height={32}
             />
-            <h1 className="capitalize" >
+            <h1 className="capitalize " >
               {item.title}
             </h1>
           </Link>
