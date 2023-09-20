@@ -30,6 +30,7 @@ const CardList = async ({ currentPage, category }) => {
         {posts?.map(item => (
           <Card
             key={item.id}
+            id={item.id}
             slug={item.slug}
             catSlug={item.catSlug}
             title={item.title}

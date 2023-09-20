@@ -15,7 +15,7 @@ const getData = async () => {
   return res.json()
 }
 
-const Card = async ({ title, createdAt, catSlug, slug }) => {
+const Card = async ({ title, createdAt, catSlug, slug, id }) => {
 
   const categoriesList = await getData()
   const selectedCat = categoriesList?.find(category => category.title === catSlug)
@@ -40,7 +40,7 @@ const Card = async ({ title, createdAt, catSlug, slug }) => {
             {catSlug}
           </span>
         </div>
-        <Link href={`/posts/${slug}`} className='hover:underline text-xl ' >
+        <Link href={`/posts/${id}`} className='hover:underline text-xl ' >
           <h1>{title}</h1>
         </Link>
         <div className='text-sm md:text-md font-extralight dark:text-slate-200 ' >

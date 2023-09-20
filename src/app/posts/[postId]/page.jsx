@@ -2,25 +2,44 @@ import React from 'react'
 import Image from 'next/image'
 import Menu from '@/components/Menu'
 import Comments from '@/components/Comments'
+import moment from 'moment'
 
-const SinglePage = () => {
+const getPostData = async (postId) => {
+  const res = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+    cache: 'no-store'
+  })
+
+  if (!res.ok) throw new Error('Failed')
+
+  return res.json()
+
+}
+
+const SinglePage = async ({ params }) => {
+  const { postId } = params
+  const data = await getPostData(postId)
+  // console.log(data)
+
   return (
     <div className='container' >
       <div className='flex items-center gap-12 ' >
         <div className='basis-1/2 h-full  ' >
-          <h1 className='text-6xl mb-12 font-semibold' >Lorem ipsum dolor sit</h1>
+          <h1 className='text-6xl mb-12 font-semibold' >
+            {data?.title}
+          </h1>
           <div className='flex items-center gap-5 ' >
             <div id="userImageContainer" className="realtive h-12 w-12 ">
               <Image
                 width={200} height={100}
                 className='object-cover rounded-[50%] '
-                src={'https://picsum.photos/id/214/400/400'}
-                alt='image'
+                // src={'https://picsum.photos/id/214/400/400'}
+                src={data?.user ? data?.user?.image : 'https://picsum.photos/id/214/400/400'}
+                alt='user-profile-pic'
               />
             </div>
             <div id="userText" className='flex flex-col gap-1  ' >
-              <span>Asa Hitoma</span>
-              <span>17.04.2023</span>
+              <span>{data?.user?.name}</span>
+              <span>{moment(data?.createdAt).fromNow()}</span>
             </div>
           </div>
         </div>
@@ -36,9 +55,7 @@ const SinglePage = () => {
       <div className='flex gap-12 mt-4 p-1' >
         <div className='basis-2/3 p-1 mt-4  ' >
           <div className='text-lg font-light mb-5 ' >
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat iusto aliquam dolorem
-              dolore sed officia eveniet in? Assumenda error eaque voluptates quia aliquid odio qui minima! Sunt sed officia nihil.
-            </p>
+            <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
             <div>
               <Comments />
             </div>
