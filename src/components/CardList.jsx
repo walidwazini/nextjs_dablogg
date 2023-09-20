@@ -22,9 +22,11 @@ const CardList = async ({ currentPage, category }) => {
   const hasNext = POST_PER_PAGE * (currentPage - 1) + POST_PER_PAGE < count
 
   return (
-    <div className='basis-2/3 bg-blue-900 px-4 ' >
-      <h1 className='mx-12 my-4 text-center md:text-start font-bold text-2xl' >Recent Posts</h1>
-      <div className='mt-16' >  {/* style.posts  */}
+    <div className='basis-2/3 bg-gray-200 dark:bg-blue-800 px-4 ' >
+      <h1 className=' mx-12 mt-6 text-center font-bold text-2xl lg:text-3xl' >
+        Recent Posts
+      </h1>
+      <div className='mt-10 lg:mt-2' >  {/* style.posts  */}
         {posts?.map(item => (
           <Card
             key={item.id}

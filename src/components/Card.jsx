@@ -1,20 +1,44 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import moment from 'moment/moment'
 
+const getData = async () => {
+  const res = await fetch('http://localhost:3000/api/categories', {
+    cache: 'no-store'
+  })
 
-const Card = ({ title, createdAt, catSlug, slug }) => {
+  if (!res.ok) {
+    throw new Error('Failed')
+  }
+
+  return res.json()
+}
+
+const Card = async ({ title, createdAt, catSlug, slug }) => {
+
+  const categoriesList = await getData()
+  const selectedCat = categoriesList?.find(category => category.title === catSlug)
+
+  // Color Scheme include opacity, slice() to remove opacity
+  // console.log(categoriesList[0]?.colorScheme.slice(0,7))
+
   return (
     <div className='mb-12 flex items-center gap-12  ' >
       <div className='hidden lg:flex flex-1 h-[350px] relative justify-center items-center ' >
         <Image width={400} height={300} className='object-cover' src={'https://picsum.photos/id/300/600/400'} alt='image' />
       </div>
       <div className='flex-1 flex flex-col gap-2 ' >
-        <div> {/* style.detail  */}
+        <div className='flex gap-5 justify-start' >
           <span>
-            {createdAt.substring(0, 10)} -{" "}
+            {moment(createdAt).fromNow()}
           </span>
-          <span className='uppercase text-orange-600 font-medium ' >{catSlug}</span>
+          <span
+            className='font-medium py-1 px-2 text-xs rounded-2xl '
+            style={{ backgroundColor: selectedCat?.colorScheme?.slice(0, 7) }}
+          >
+            {catSlug}
+          </span>
         </div>
         <Link href={`/posts/${slug}`} className='hover:underline text-xl ' >
           <h1>{title}</h1>
