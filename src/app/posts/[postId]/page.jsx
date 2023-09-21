@@ -18,7 +18,6 @@ const getPostData = async (postId) => {
 const SinglePage = async ({ params }) => {
   const { postId } = params
   const data = await getPostData(postId)
-  // console.log(data)
 
   return (
     <div className='container' >
@@ -32,7 +31,6 @@ const SinglePage = async ({ params }) => {
               <Image
                 width={200} height={100}
                 className='object-cover rounded-[50%] '
-                // src={'https://picsum.photos/id/214/400/400'}
                 src={data?.user ? data?.user?.image : 'https://picsum.photos/id/214/400/400'}
                 alt='user-profile-pic'
               />

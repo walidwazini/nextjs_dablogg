@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import useSWR from 'swr'
+import moment from 'moment'
 
 import naruto from '@/images/naruto_momento.jpg'
 import { useSession } from 'next-auth/react'
@@ -21,22 +22,26 @@ const fetcher = async (url) => {
   return data;
 };
 
-const CommentBlock = ({ username, imgUrl, createdAt }) => {
+const CommentBlock = ({ username, imgUrl, createdAt, commentText }) => {
   return (
     <div className="comment mb-12 ">
       <div className="user flex items-center gap-5 mb-3 ">
         <Image
-          // width={200} height={100}
+          width={200} height={100}
           className='object-cover rounded-full w-10 md:w-12 xl:w-14 aspect-square '
-          src={naruto}
+          src={imgUrl ? imgUrl : naruto}
           alt='user_profile'
         />
         <div id="user-info" className='flex flex-col gap-1  ' >
-          <span className='text-sm md:text-base font-medium' >Username</span>
-          <span className='text-xs italic ' >Created At</span>
+          <span className='text-sm md:text-base font-medium' >{username}</span>
+          <span className='text-xs italic ' >
+            {moment(createdAt).fromNow()}
+          </span>
         </div>
       </div>
-      <p className='font-light text-lg ' >Lorem ipsum dolor sit amet consectetur adipi.</p>
+      <p className='font-light text-lg ' >
+      {commentText}
+      </p>
     </div>
   )
 }
@@ -46,7 +51,7 @@ const Comments = ({ postSlug }) => {
   const online = session.status === 'authenticated'
   const offline = session.status === 'unauthenticated'
 
-  const { mutate } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, fetcher)
+  const { mutate, data, isLoading } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, fetcher)
 
   const [commentText, setCommentText] = useState('')
 
@@ -55,8 +60,8 @@ const Comments = ({ postSlug }) => {
       method: 'POST', body: JSON.stringify({ desc: commentText, postSlug })
     })
     mutate()
+    setCommentText('')
   }
-
 
   return (
     <div className="container mt-12 ">
@@ -70,21 +75,30 @@ const Comments = ({ postSlug }) => {
       {online && (
         <div className="write flex items-center justify-between gap-8 ">
           <textarea name="comments"
+            value={commentText}
             onChange={ev => setCommentText(ev.target.value)}
             placeholder='Write a comment'
             id="comment"
             className=" bg-slate-300 text-black text-sm p-2 rounded-md w-full  " />
           <button
             onClick={submitHandler}
-            className="px-5 py-4 bg-black dark:bg-slate-300 text-white dark:text-black font-semibold rounded-md "
+            className="px-5 py-4 bg-black dark:bg-slate-300 dark:hover:bg-white text-white dark:text-black font-semibold rounded-md "
           >
             Send
           </button>
         </div>
       )}
       <div className="comments mt-12 ">
-        <CommentBlock />
-        <CommentBlock />
+        {isLoading && (<div>Loading...</div>)}
+        {!isLoading && data?.length === 0  && (<div>Be the first to comment.</div>)}
+        {!isLoading && data?.map(item => (
+          <CommentBlock
+            username={item?.user?.name}
+            imgUrl={item?.user?.image}
+            createdAt={item?.createdAt}
+            commentText={item?.desc}
+          />
+        ))}
       </div>
     </div>
   )
