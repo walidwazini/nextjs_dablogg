@@ -57,7 +57,7 @@ const SinglePage = async ({ params }) => {
           <div className='text-lg font-light mb-5 ' >
             <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
             <div>
-              <Comments />
+              <Comments postSlug={data.slug} />
             </div>
           </div>
         </div>
