@@ -75,6 +75,13 @@ const Navbar = () => {
             </Link>
           </div>
         ))}
+        {online && (
+          <div className='text-md capitalize hover:text-slate-500 dark:hover:text-blue-500 hover:underline cursor-pointer ' >
+            <Link href={'/write'} >
+              Write
+            </Link>
+          </div>
+        )}
         {offline && (
           <Link href={'/login'}
             className='text-md px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-500'
@@ -108,7 +115,7 @@ const Navbar = () => {
               </div>
             ))}
             {offline && (
-              <div 
+              <div
                 className='hover:bg-slate-100 hover:font-semibold hover:dark:bg-[#446699] text-xl p-4'
               >
                 <Link href={'/login'} >
