@@ -1,3 +1,6 @@
+import { BsFillImageFill, BsCameraVideoFill } from 'react-icons/bs'
+import { FiUpload, } from 'react-icons/fi'
+
 export const CategoryList = [
   { title: 'style', color: '#57c4ff31' },
   { title: 'fashion', color: '#da85c731' },
@@ -35,4 +38,10 @@ export const DemoPosts2 = [
     catSlug: 'food',
     slug: Math.random()
   },
+]
+
+export const IconButtons = [
+  { id: 'file', icon: <FiUpload /> },
+  { id: 'image', icon: <BsFillImageFill /> },
+  { id: 'video', icon: <BsCameraVideoFill /> }
 ]

@@ -43,7 +43,7 @@ body {
 }
 
 .quill > .ql-container > .ql-editor.ql-blank::before{
-  color: red;
+  color:cyan ;
 }
 
 .ql-toolbar .ql-stroke {

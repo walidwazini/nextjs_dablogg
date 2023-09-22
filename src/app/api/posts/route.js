@@ -35,6 +35,12 @@ export const GET = async (req) => {
   }
 }
 
+
+
+
+
+
+
 export const POST = async (req) => {
   const session = await getAuthSession()
 
@@ -46,6 +52,7 @@ export const POST = async (req) => {
 
   try {
     const body = await req.json()
+    console.log(body)
     const post = await prisma.post.create({
       data: { ...body, userEmail: session.user.email },
     })

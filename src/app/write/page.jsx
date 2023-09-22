@@ -1,20 +1,18 @@
 "use client"
-import React, { useState } from 'react'
-import { BsFillPlusCircleFill, BsFillImageFill, BsCameraVideoFill } from 'react-icons/bs'
-import { FiUpload, } from 'react-icons/fi'
+import React, { useEffect, useState } from 'react'
+import { BsFillPlusCircleFill } from 'react-icons/bs'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.bubble.css'
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react'
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 
+import { IconButtons } from '@/constant'
 import { CategoryList } from '@/constant'
+import { app as firebaseApp } from '@/utils/firebase'
 
-const iconButtons = [
-  { id: 'file', icon: <FiUpload /> },
-  { id: 'image', icon: <BsFillImageFill /> },
-  { id: 'video', icon: <BsCameraVideoFill /> }
-]
+const storage = getStorage(firebaseApp)
 
 const WritePage = () => {
   const router = useRouter()
@@ -22,9 +20,80 @@ const WritePage = () => {
   const [modalOpen, setModalOpen] = useState(false)
 
   const [file, setFile] = useState(null)
+  const [media, setMedia] = useState('')
+  const [value, setValue] = useState('This is a test value')
+  const [title, setTitle] = useState('Test')
+  const [catSlug, setCatSlug] = useState('coding')
 
   const modalHandler = () => {
     setModalOpen(prevState => !prevState)
+  }
+
+  useEffect(() => {
+    const upload = () => {
+      // create unique name for same file 
+      const uniqueName = new Date().getTime + file.name
+      const storageRef = ref(storage, uniqueName)
+
+      const uploadeTask = uploadBytesResumable(storageRef, file)
+
+      uploadeTask.on('state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log(`Upload is ${progress}% done.`)
+
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused.')
+            break;
+          case 'running':
+            console.log('Upload is running!')
+            break
+        }
+      },
+        (error) => console.log(error),
+        () => {
+          getDownloadURL(uploadeTask.snapshot.ref)
+            .then(downloadUrl => {
+              console.log(`File is available at : ${downloadUrl}`)
+
+            })
+        }
+      )
+    }
+    file && upload()
+  }, [file])
+
+  const tunrToSlug = (str) => {
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  const randomDigit = Math.floor(Math.random() * 12)
+
+  const handleSubmit = async () => {
+    const toBeSend = {
+      title,
+      desc: value,
+      img: media,
+      slug: `${randomDigit}-${title}-${randomDigit}`,
+      catSlug: catSlug || "style", //If not selected, choose the general category
+    }
+    console.log(toBeSend)
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify(toBeSend),
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      console.log(data)
+      // router.push(`/posts/${data.slug}`);
+      router.push(`/`);
+    }
   }
 
   if (status === 'unauthenticated') return (
@@ -36,8 +105,10 @@ const WritePage = () => {
   return (
     <div className='container' >
       <input
+        value={title}
+        onChange={ev => setTitle(ev.target.value)}
         type='text' placeholder='Title'
-        className='w-full p-4 text-4xl border-none outline-none text-slate-400 bg-transparent '
+        className='w-full p-4 text-4xl border-none outline-none text-slate-700 dark:text-white bg-transparent '
       />
       <div className='flex w-full items-start justify-between ' >
         <select className='mb-12 px-5 py-3 w-max capitalize ' >
@@ -51,7 +122,8 @@ const WritePage = () => {
           ))}
         </select>
         <button
-          className='px-5 py-3 bg-[#1a8917] dark:bg-[#349e30] text-white rounded-2xl'
+          onClick={handleSubmit}
+          className='px-5 py-3 bg-[#1a8917] hover:bg-opacity-75 dark:hover:bg-opacity-75 dark:bg-[#349e30] text-white rounded-2xl'
         >
           Publish
         </button>
@@ -70,7 +142,7 @@ const WritePage = () => {
               type='file' id='image'
               style={{ display: 'none' }}
             />
-            {iconButtons.map(btn => (
+            {IconButtons.map(btn => (
               <button key={btn.id} className='w-9 h-9 rounded-[50%] bg-cyan-500 border-solid border-slate-300 flex items-center justify-center cursor-pointer' >
                 <label htmlFor={btn.id} >
                   {btn.icon}
@@ -80,8 +152,10 @@ const WritePage = () => {
           </div>
         )}
         <ReactQuill theme='bubble'
-          className='w-full '
+          className='w-full'
           placeholder='Tell your story...'
+          value={value}
+          onChange={setValue}
         />
       </div>
     </div>
