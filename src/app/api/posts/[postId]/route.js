@@ -7,12 +7,17 @@ export const GET = async (req, { params }) => {
   // console.log(params)
 
   try {
-    const post = await prisma.post.findUnique({
+    // const post = await prisma.post.findUnique({
+    //   where: { id: postId },
+    //   include: { user: true }
+    // })
+
+    // * To increase the number of view of a post
+    const post = await prisma.post.update({
       where: { id: postId },
+      data: { views: { increment: 1 } },
       include: { user: true }
     })
-
-    console.log(post)
 
     return new NextResponse(JSON.stringify(post, { status: 200 }))
   } catch (error) {

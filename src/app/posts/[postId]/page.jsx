@@ -16,6 +16,7 @@ const getPostData = async (postId) => {
 }
 
 const SinglePage = async ({ params }) => {
+  const sampleText = `It is becoming increasingly common for businesses to have a website, although at the moment only 48% have one. Speaking of the half that have already gone digital, if you want to increase your presence on the Internet, it is essential that you have a good positioning in the main search engines, and, therefore, that you take care of the SEO of your page so that the crawlers detect it and make you climb positions when users search on the Internet.`
   const { postId } = params
   const data = await getPostData(postId)
 
@@ -46,7 +47,7 @@ const SinglePage = async ({ params }) => {
             width={400} height={200}
             className='object-cover h-[95%] rounded-lg '
             // src={'https://picsum.photos/id/214/600/350'}
-            src={ data?.img || 'https://picsum.photos/id/214/600/350'}
+            src={data?.img || 'https://picsum.photos/id/214/600/350'}
             alt='image'
           />
         </div>
@@ -54,7 +55,8 @@ const SinglePage = async ({ params }) => {
       <div className='flex gap-12 mt-4 p-1' >
         <div className='basis-2/3 p-1 mt-4  ' >
           <div className='text-lg font-light mb-5 ' >
-            <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
+            {/* <div dangerouslySetInnerHTML={{ __html: data?.desc }}> </div> */}
+            <div dangerouslySetInnerHTML={{ __html: sampleText }} />
             <div>
               <Comments postSlug={data.slug} />
             </div>
