@@ -32,7 +32,7 @@ const WritePage = () => {
   useEffect(() => {
     const upload = () => {
       // create unique name for same file 
-      const uniqueName = new Date().getTime + file.name
+      const uniqueName = new Date().getTime() + file.name
       const storageRef = ref(storage, uniqueName)
 
       const uploadeTask = uploadBytesResumable(storageRef, file)
@@ -55,7 +55,7 @@ const WritePage = () => {
           getDownloadURL(uploadeTask.snapshot.ref)
             .then(downloadUrl => {
               console.log(`File is available at : ${downloadUrl}`)
-
+              setMedia(downloadUrl)
             })
         }
       )
@@ -63,26 +63,18 @@ const WritePage = () => {
     file && upload()
   }, [file])
 
-  const tunrToSlug = (str) => {
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
-  }
-
   const randomDigit = Math.floor(Math.random() * 12)
+  const dateNow = new Date().getTime()
+  const convertTitle = title => title.replace(/\s/g, '').toLowerCase().slice(0, 7)
 
   const handleSubmit = async () => {
     const toBeSend = {
       title,
       desc: value,
       img: media,
-      slug: `${randomDigit}-${title}-${randomDigit}`,
+      slug: `${dateNow}-${convertTitle(title)}-${randomDigit}`,
       catSlug: catSlug || "style", //If not selected, choose the general category
     }
-    console.log(toBeSend)
     const res = await fetch("/api/posts", {
       method: "POST",
       body: JSON.stringify(toBeSend),
@@ -91,8 +83,8 @@ const WritePage = () => {
     if (res.status === 200) {
       const data = await res.json();
       console.log(data)
-      // router.push(`/posts/${data.slug}`);
-      router.push(`/`);
+      router.push(`/posts/${data.id}`);
+      // router.push(`/`);
     }
   }
 
@@ -111,7 +103,9 @@ const WritePage = () => {
         className='w-full p-4 text-4xl border-none outline-none text-slate-700 dark:text-white bg-transparent '
       />
       <div className='flex w-full items-start justify-between ' >
-        <select className='mb-12 px-5 py-3 w-max capitalize ' >
+        <select
+          onChange={ev => setCatSlug(ev.target.value)}
+          className='mb-12 px-5 py-3 w-max capitalize ' >
           {CategoryList.map(item => (
             <option
               className='capitalize'

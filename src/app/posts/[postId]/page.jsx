@@ -45,7 +45,8 @@ const SinglePage = async ({ params }) => {
           <Image
             width={400} height={200}
             className='object-cover h-[95%] rounded-lg '
-            src={'https://picsum.photos/id/214/600/350'}
+            // src={'https://picsum.photos/id/214/600/350'}
+            src={ data?.img || 'https://picsum.photos/id/214/600/350'}
             alt='image'
           />
         </div>
