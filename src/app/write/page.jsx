@@ -7,6 +7,8 @@ import 'react-quill/dist/quill.bubble.css'
 import { useRouter } from "next/navigation";
 import { useSession } from 'next-auth/react'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { IconButtons } from '@/constant'
 import { CategoryList } from '@/constant'
@@ -24,6 +26,9 @@ const WritePage = () => {
   const [value, setValue] = useState('This is a test value')
   const [title, setTitle] = useState('Test')
   const [catSlug, setCatSlug] = useState('coding')
+
+  const notify = () => toast("Wow so easy!");
+  const uploadNotify = (text) => toast(text)
 
   const modalHandler = () => {
     setModalOpen(prevState => !prevState)
@@ -44,9 +49,10 @@ const WritePage = () => {
         switch (snapshot.state) {
           case 'paused':
             console.log('Upload is paused.')
+            uploadNotify('Upload is paused')
             break;
           case 'running':
-            console.log('Upload is running!')
+            uploadNotify('Upload is running')
             break
         }
       },
@@ -54,7 +60,8 @@ const WritePage = () => {
         () => {
           getDownloadURL(uploadeTask.snapshot.ref)
             .then(downloadUrl => {
-              console.log(`File is available at : ${downloadUrl}`)
+              // console.log(`File is available at : ${downloadUrl}`)
+              uploadNotify(`Upload is complete`)
               setMedia(downloadUrl)
             })
         }
@@ -96,6 +103,10 @@ const WritePage = () => {
 
   return (
     <div className='container' >
+      <div>
+        {/* <button onClick={notify}>Notify!</button> */}
+        <ToastContainer  />
+      </div>
       <input
         value={title}
         onChange={ev => setTitle(ev.target.value)}
